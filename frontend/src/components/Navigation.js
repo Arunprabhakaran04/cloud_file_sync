@@ -1,6 +1,6 @@
 // Navigation component
 import React from 'react';
-import { Upload, AlertTriangle, BarChart3, Settings } from 'lucide-react';
+import { Upload, AlertTriangle, FolderOpen } from 'lucide-react';
 
 const Navigation = ({ currentView, onViewChange, apiStatus }) => {
   const navItems = [
@@ -11,16 +11,16 @@ const Navigation = ({ currentView, onViewChange, apiStatus }) => {
       description: 'Upload and sync files'
     },
     {
+      id: 'overview',
+      label: 'Files',
+      icon: FolderOpen,
+      description: 'Manage and view all your files'
+    },
+    {
       id: 'conflicts',
       label: 'Conflicts',
       icon: AlertTriangle,
       description: 'Resolve file conflicts'
-    },
-    {
-      id: 'status',
-      label: 'Sync Status',
-      icon: BarChart3,
-      description: 'View synchronization status'
     }
   ];
 

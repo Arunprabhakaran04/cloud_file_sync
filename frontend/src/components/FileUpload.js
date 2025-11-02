@@ -9,6 +9,8 @@ const FileUpload = ({ onUploadSuccess }) => {
   const [uploadStatus, setUploadStatus] = useState('idle'); // idle, uploading, success, error
   const [uploadResult, setUploadResult] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [syncGoogle, setSyncGoogle] = useState(true);
+  const [syncAzure, setSyncAzure] = useState(true);
   const fileInputRef = useRef(null);
 
   const handleDragEnter = (e) => {
@@ -68,10 +70,15 @@ const FileUpload = ({ onUploadSuccess }) => {
     setUploadProgress(0);
 
     try {
-      const result = await uploadFile(selectedFile, (progressEvent) => {
-        const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-        setUploadProgress(progress);
-      });
+      const result = await uploadFile(
+        selectedFile, 
+        syncGoogle,  // sync to Google Drive
+        syncAzure,   // sync to Azure Blob
+        (progressEvent) => {
+          const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(progress);
+        }
+      );
 
       setUploadStatus('success');
       setUploadResult(result);
@@ -88,10 +95,51 @@ const FileUpload = ({ onUploadSuccess }) => {
       }
 
     } catch (error) {
-      setUploadStatus('error');
-      setUploadResult({ 
-        message: error.response?.data?.detail || 'Upload failed. Please try again.' 
-      });
+      // Check if it's a duplicate file (409 status)
+      if (error.response?.status === 409) {
+        setUploadStatus('duplicate');
+        
+        let duplicateMessage = 'This file already exists in your storage.';
+        if (error.response?.data?.detail) {
+          duplicateMessage = error.response.data.detail;
+        }
+        
+        setUploadResult({ message: duplicateMessage });
+        setSelectedFile(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      } else {
+        setUploadStatus('error');
+        
+        // Handle different error response formats
+        let errorMessage = 'Upload failed. Please try again.';
+        
+        if (error.response?.data) {
+          const errorData = error.response.data;
+          
+          // Handle FastAPI validation errors (array format)
+          if (Array.isArray(errorData.detail)) {
+            errorMessage = errorData.detail.map(err => err.msg || JSON.stringify(err)).join(', ');
+          } 
+          // Handle string detail
+          else if (typeof errorData.detail === 'string') {
+            errorMessage = errorData.detail;
+          }
+          // Handle object detail
+          else if (typeof errorData.detail === 'object') {
+            errorMessage = JSON.stringify(errorData.detail);
+          }
+          // Handle direct message
+          else if (errorData.message) {
+            errorMessage = errorData.message;
+          }
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
+        setUploadResult({ message: errorMessage });
+      }
     }
   };
 
@@ -119,6 +167,8 @@ const FileUpload = ({ onUploadSuccess }) => {
         return <Loader className="animate-spin" />;
       case 'success':
         return <CheckCircle className="text-green-500" />;
+      case 'duplicate':
+        return <AlertCircle className="text-blue-500" />;
       case 'error':
         return <AlertCircle className="text-red-500" />;
       default:
@@ -183,6 +233,28 @@ const FileUpload = ({ onUploadSuccess }) => {
         </div>
       )}
 
+      {/* Sync Options */}
+      {selectedFile && uploadStatus === 'idle' && (
+        <div className="sync-options">
+          <label className="sync-checkbox">
+            <input 
+              type="checkbox" 
+              checked={syncGoogle} 
+              onChange={(e) => setSyncGoogle(e.target.checked)}
+            />
+            <span>Sync to Google Drive</span>
+          </label>
+          <label className="sync-checkbox">
+            <input 
+              type="checkbox" 
+              checked={syncAzure} 
+              onChange={(e) => setSyncAzure(e.target.checked)}
+            />
+            <span>Sync to Azure Blob Storage</span>
+          </label>
+        </div>
+      )}
+
       {/* Upload Controls */}
       <div className="upload-controls">
         {selectedFile && uploadStatus === 'idle' && (
@@ -197,7 +269,7 @@ const FileUpload = ({ onUploadSuccess }) => {
           </>
         )}
         
-        {uploadStatus === 'success' && (
+        {(uploadStatus === 'success' || uploadStatus === 'duplicate') && (
           <button onClick={resetUpload} className="new-upload-button">
             Upload Another File
           </button>
@@ -229,6 +301,14 @@ const FileUpload = ({ onUploadSuccess }) => {
                     </ul>
                   </div>
                 )}
+              </div>
+            </div>
+          ) : uploadStatus === 'duplicate' ? (
+            <div className="duplicate-message">
+              <AlertCircle size={20} />
+              <div>
+                <h4>ℹ️ File Already Exists</h4>
+                <p>{uploadResult.message}</p>
               </div>
             </div>
           ) : (

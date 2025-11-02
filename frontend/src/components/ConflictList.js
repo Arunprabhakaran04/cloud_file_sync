@@ -18,9 +18,17 @@ const ConflictList = ({ refreshTrigger }) => {
       setLoading(true);
       setError(null);
       const conflictsData = await getConflicts();
-      setConflicts(conflictsData);
+      // Handle both array and object responses
+      if (Array.isArray(conflictsData)) {
+        setConflicts(conflictsData);
+      } else if (conflictsData && Array.isArray(conflictsData.conflicts)) {
+        setConflicts(conflictsData.conflicts);
+      } else {
+        setConflicts([]);
+      }
     } catch (err) {
       setError('Failed to fetch conflicts: ' + (err.response?.data?.detail || err.message));
+      setConflicts([]); // Set empty array on error
     } finally {
       setLoading(false);
     }

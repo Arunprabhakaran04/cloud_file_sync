@@ -19,9 +19,17 @@ const SyncStatus = ({ refreshTrigger }) => {
       setLoading(true);
       setError(null);
       const filesData = await listFiles();
-      setFiles(filesData);
+      // Handle both array and object responses
+      if (Array.isArray(filesData)) {
+        setFiles(filesData);
+      } else if (filesData && Array.isArray(filesData.files)) {
+        setFiles(filesData.files);
+      } else {
+        setFiles([]);
+      }
     } catch (err) {
       setError('Failed to fetch files: ' + (err.response?.data?.detail || err.message));
+      setFiles([]); // Set empty array on error
     } finally {
       setLoading(false);
     }
