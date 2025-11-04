@@ -126,13 +126,6 @@ Make sure backend is running on port 8000
 - Enable Google Drive API in Console
 - Check client ID/secret in .env
 
-## Next Steps
-
-1. ✅ Test file upload and sync
-2. ✅ Connect Google Drive
-3. ⏳ Configure Azure Blob Storage (optional)
-4. ⏳ Deploy to production
-
 ## Need Help?
 
 - Check backend logs: `docker-compose logs -f backend`
