@@ -1,22 +1,21 @@
-# Cloud Storage Sync Tool 🚀
+# Cloud Storage Sync Tool
 
 A full-stack application for synchronizing files across local storage, Google Drive, and Azure Blob Storage with automatic conflict detection and resolution.
 
-## ✨ Features
+## Features
 
-- 📤 **File Upload**: Web-based file upload with progress tracking
-- 💾 **Local Storage**: Fast local file storage with metadata tracking
-- 🔄 **Multi-Cloud Sync**: Automatic synchronization to Google Drive and Azure Blob
-- 🔐 **User Authentication**: Secure JWT-based authentication
-- 🔗 **Google Drive OAuth**: Per-user Google Drive access
-- ⚔️ **Conflict Detection**: Automatic conflict detection across storage backends
-- 🔧 **Conflict Resolution**: Multiple resolution strategies (last-write-wins, keep-both, manual)
-- 📊 **Status Tracking**: Real-time sync status and progress
-- 🎯 **RESTful API**: Complete REST API with OpenAPI documentation
-- 🐳 **Docker Support**: Docker and docker-compose configurations
-- 📱 **React Frontend**: Modern React frontend (integrated)
-
-## 🚀 Quick Start
+- **File Upload**: Web-based file upload with progress tracking
+- **Local Storage**: Fast local file storage with metadata tracking
+- **Multi-Cloud Sync**: Automatic synchronization to Google Drive and Azure Blob
+- **User Authentication**: Secure JWT-based authentication
+- **Google Drive OAuth**: Per-user Google Drive access
+- **Conflict Detection**: Automatic conflict detection across storage backends
+- **Conflict Resolution**: Multiple resolution strategies (last-write-wins, keep-both, manual)
+- **Status Tracking**: Real-time sync status and progress
+- **RESTful API**: Complete REST API with OpenAPI documentation
+- **Docker Support**: Docker and docker-compose configurations
+- **React Frontend**: Modern React frontend (integrated)
+## Quick Start
 
 ### Backend Setup (5 minutes)
 
@@ -43,7 +42,7 @@ npm start
 
 **Access:** http://localhost:3000
 
-## 📚 Documentation
+## Documentation
 
 | Document | Description |
 |----------|-------------|
@@ -53,7 +52,7 @@ npm start
 | [frontend/INTEGRATION.md](frontend/INTEGRATION.md) | Frontend integration guide |
 | [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) | Complete project summary |
 
-## 🔧 Key Features
+## Key Features
 
 ### Authentication
 - JWT-based API authentication
@@ -71,13 +70,13 @@ npm start
 - Multiple resolution strategies
 - Manual conflict resolution UI
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Backend:** FastAPI, SQLModel, PostgreSQL, Google Drive API, Azure Blob Storage
 **Frontend:** React, Axios
 **DevOps:** Docker, docker-compose
 
-## 📖 API Endpoints
+## API Endpoints
 
 ```bash
 # Authentication
@@ -98,43 +97,41 @@ GET    /api/v1/conflicts       # List conflicts
 POST   /api/v1/conflicts/{id}/resolve  # Resolve conflict
 ```
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 ```bash
 cd backend
 docker-compose up --build
 ```
 
-## 📝 Configuration
+## Configuration
 
 1. Copy `backend/.env.example` to `backend/.env`
 2. Run `python backend/setup.py` to generate secure keys
 3. Add Google OAuth credentials from [Google Cloud Console](https://console.cloud.google.com/)
 4. (Optional) Add Azure Storage connection string
 
-## ✅ Project Status
-
-**Status:** ✅ **Complete & Production Ready**
+## Project Status
 
 All core features implemented:
-- ✅ File upload with multipart support
-- ✅ Local storage with async operations
-- ✅ Google Drive OAuth integration
-- ✅ Azure Blob Storage support (code complete)
-- ✅ Background sync with retry logic
-- ✅ Conflict detection and resolution
-- ✅ JWT authentication
-- ✅ Complete API documentation
-- ✅ Docker support
-- ✅ Frontend integration
+- File upload with multipart support
+- Local storage with async operations
+- Google Drive OAuth integration
+- Azure Blob Storage support (code complete)
+- Background sync with retry logic
+- Conflict detection and resolution
+- JWT authentication
+- Complete API documentation
+- Docker support
+- Frontend integration
 
-## 🤝 Getting Help
+## Getting Help
 
 - **Setup Issues:** Run `python backend/setup.py` for guided setup
 - **API Reference:** http://localhost:8000/docs
 - **Full Documentation:** See `backend/README.md`
 
-## 📞 Support
+## Support
 
 For issues and questions:
 - Check the documentation in `backend/` and `frontend/`
@@ -142,7 +139,5 @@ For issues and questions:
 - Open an issue on GitHub
 
 ---
-
-**Made with ❤️ using FastAPI and React**
 
 Start with `cd backend && python setup.py` for guided setup!
