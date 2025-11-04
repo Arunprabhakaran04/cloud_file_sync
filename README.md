@@ -50,7 +50,6 @@ npm start
 | [backend/QUICKSTART.md](backend/QUICKSTART.md) | 5-minute setup guide |
 | [backend/DEPLOYMENT.md](backend/DEPLOYMENT.md) | Production deployment guide |
 | [frontend/INTEGRATION.md](frontend/INTEGRATION.md) | Frontend integration guide |
-| [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) | Complete project summary |
 
 ## Key Features
 
