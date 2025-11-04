@@ -4,17 +4,17 @@ FastAPI backend for synchronizing files across local storage, Google Drive, and 
 
 ## Features
 
-- ✅ File upload with multipart/form-data support
-- ✅ Local file storage
-- ✅ Google Drive integration with OAuth2 (per-user)
-- ✅ Azure Blob Storage integration (prepared for use)
-- ✅ Background sync with retry logic
-- ✅ Conflict detection and resolution
-- ✅ File versioning and metadata tracking
-- ✅ JWT-based authentication
-- ✅ Async database operations with SQLModel
-- ✅ Structured logging
-- ✅ Docker support
+- File upload with multipart/form-data support
+- Local file storage
+- Google Drive integration with OAuth2 (per-user)
+- Azure Blob Storage integration (prepared for use)
+- Background sync with retry logic
+- Conflict detection and resolution
+- File versioning and metadata tracking
+- JWT-based authentication
+- Async database operations with SQLModel
+- Structured logging
+- Docker support
 
 ## Tech Stack
 
